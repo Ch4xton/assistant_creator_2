@@ -14,8 +14,13 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Initialize OpenAI client with API key from .env
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Initialize OpenAI client with API key from environment variable
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    st.error("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+    st.stop()
+
+client = OpenAI(api_key=api_key)
 
 # Streamlit app configuration
 st.set_page_config(page_title="OpenAI Assistant Manager", layout="wide")
